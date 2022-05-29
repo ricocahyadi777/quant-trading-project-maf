@@ -71,15 +71,15 @@ period = 20           #NUMBER OF TRADING DAYS TO COMPUTE MEAN REVERSION OVER.  T
 universesize = 2000                 #SIZE OF PORTFOLIO IN NUMBER OF STOCKS.  IF THIS IS MORE THAN 2000, IT WILL GENERALLY JUST BE CAPPED AT 2000 SINCE BASE UNIVERSE IS RUSSELL 2000
 maxindividualweight = 0.01          #MAXIMUM FRACTION A SINGLE POSITION CAN TAKE UP OF ENTIRE PORTFOLIO.  0.01 MEANS 1%.  i.e. if you have a portfolio of $100 million, max single position size is $1 million
 
-
 for tvar in vars:
     rawdata[tvar] = russell_df.loc[:, ['tickerid', 'ticker', 'date', tvar]]
     rawdata[tvar] = rawdata[tvar].pivot(index = 'date', columns = 'ticker', values = tvar)
     rawdata[tvar] = rawdata[tvar].iloc[:, :universesize]
     
 return_df = (rawdata['close'] / rawdata['close'].shift(1)) - 1
-closing_price = rawdata['close'].dropna(axis=1)
-#USING MA CROSSOVER:  MOMENTUM SIGNAL
+closing_price = rawdata['close'].dropna(axis=1)     # to remove the data with Nan
+#USING MA CROSSOVER:  MOMENTUM SIGNAL For references only
+
 signal_df = -(return_df.rolling(3).mean() - return_df.rolling(period, min_periods = 3).mean())
 signal_df = signal_df.subtract(signal_df.mean(axis=1), axis='index')
 signal_df = signal_df.divide(signal_df.abs().sum(axis=1), axis='index')
