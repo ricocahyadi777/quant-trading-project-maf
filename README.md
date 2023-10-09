@@ -1,6 +1,5 @@
 # Quant-trading-project-maf
-Quantitative trading using Golden Cross and EMA
-
+Quantitative trading using Golden Cross and EMA.
 In the last few years, the golden crossover and death crossover trading strategy has seen vast popularity and has been widely used by traders in hopes to gather significant returns. Through this project, we try to implement this trading strategy and compare its performance with a buy and hold strategy across equity, forex, and cryptocurrency segments.
 
 # Trading Strategy Overview 
